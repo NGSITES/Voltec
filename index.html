@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voltec Mecatrônica | Diesel de Alta Performance</title>
     
+    <link rel="icon" type="image/png" sizes="512x512" href="logo-voltec.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -13,92 +14,143 @@
     <style>
         :root {
             --bg-dark: #0a0b0d;
-            --card-bg: #16181b;
+            --card-bg: rgba(22, 24, 27, 0.95);
             --accent: #ff8c00; 
-            --text-gray: #a0a0a0;
             --white: #ffffff;
             --wa-green: #25d366;
-            --transicao: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --transicao: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { background-color: var(--bg-dark); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        h1, h2, h3, .logo { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* --- LOGO FIXA NO FUNDO --- */
+        .bg-fixed-logo {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 55%;
+            opacity: 0.03;
+            filter: blur(12px);
+            z-index: -1;
+            pointer-events: none;
+        }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; position: relative; }
 
         /* --- NAVEGAÇÃO --- */
         nav { padding: 25px 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .logo { font-size: 24px; font-weight: 700; }
-        .logo span { color: var(--accent); }
-        .nav-links a { color: var(--white); text-decoration: none; margin-left: 30px; font-size: 12px; font-weight: 700; transition: 0.3s; text-transform: uppercase; }
+        .logo-nav img { height: 85px; width: auto; }
+        .nav-links a { color: var(--white); text-decoration: none; margin-left: 30px; font-size: 13px; font-weight: 700; font-family: 'Orbitron'; transition: 0.3s; }
         .nav-links a:hover { color: var(--accent); }
 
-        /* --- HERO COM CARROSSEL TRASEIRO --- */
-        .hero { position: relative; padding: 80px 0; text-align: center; background: radial-gradient(circle at center, #1a1c20 0%, #0a0b0d 100%); overflow: hidden; }
-        .marcas-bg-carousel { position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 100%; white-space: nowrap; z-index: 1; opacity: 0.06; pointer-events: none; }
-        .marcas-bg-track { display: inline-block; animation: rolarInfinita 25s linear infinite; }
-        .marcas-bg-carousel img { height: 100px; width: auto; margin: 0 60px; filter: grayscale(1) brightness(5); }
+        /* --- HERO (CENTRALIZAÇÃO DAS LOGOS DE FUNDO) --- */
+        .hero { 
+            position: relative; 
+            padding: 100px 0; 
+            text-align: center; 
+            background: radial-gradient(circle at center, #1a1c20 0%, #0a0b0d 100%); 
+            overflow: hidden; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 850px;
+        }
+        
+        .marcas-bg-carousel { 
+            position: absolute; 
+            top: 50%; 
+            left: 0; 
+            transform: translateY(-50%); 
+            width: 100%; 
+            white-space: nowrap; 
+            z-index: 1; 
+            opacity: 0.08; 
+            pointer-events: none; 
+        }
+        
+        .marcas-bg-track { display: inline-block; animation: rolarInfinita 20s linear infinite; }
+        .marcas-bg-carousel img { height: 450px; width: auto; margin: 0 160px; filter: grayscale(1) brightness(12); }
 
         @keyframes rolarInfinita { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .hero .container { z-index: 5; }
-        .hero h1 { font-size: clamp(28px, 5vw, 55px); margin-bottom: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .hero-content { position: relative; z-index: 10; width: 100%; }
+        .hero h1 { font-size: clamp(28px, 5vw, 55px); margin-bottom: 15px; text-shadow: 0 0 15px rgba(0,0,0,0.8); }
         .hero p { color: var(--accent); font-weight: 700; letter-spacing: 4px; margin-bottom: 40px; }
         
-        /* Ajuste do box de vídeo */
-        .video-box { width: 100%; max-width: 900px; margin: 0 auto; border: 4px solid var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.8); position: relative; z-index: 10; aspect-ratio: 16/9; background: #000; }
-        .video-box video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .video-box { 
+            width: 100%; 
+            max-width: 950px; 
+            margin: 0 auto; 
+            border: 3px solid rgba(255,140,0,0.15); 
+            border-radius: 15px; 
+            overflow: hidden; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9); 
+            background: #000;
+        }
+        .video-box video { width: 100%; display: block; }
 
-        /* --- SERVIÇOS --- */
-        .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 50px; }
-        .service-card { background: var(--card-bg); padding: 40px 25px; border-radius: 8px; text-align: center; transition: var(--transicao); border: 1px solid transparent; }
-        .service-card:hover { border-color: var(--accent); transform: translateY(-10px); background: #1e2024; }
-        .service-card i { font-size: 35px; color: var(--accent); margin-bottom: 20px; }
-        .service-card h3 { font-size: 16px; margin-bottom: 12px; color: var(--white); border-bottom: 1px solid rgba(255,140,0,0.2); padding-bottom: 10px; }
-        .service-card p { font-size: 13px; color: var(--text-gray); }
+        /* --- SOBRE A EMPRESA --- */
+        .about-section { padding: 100px 0; background: rgba(14, 16, 19, 0.8); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .about-card { background: var(--card-bg); padding: 40px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        .about-card h2 { font-size: 22px; margin-bottom: 20px; color: var(--accent); border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 5px; }
+        .about-card p { font-size: 15px; line-height: 1.8; margin-bottom: 15px; }
+        .btn-insta { display: inline-flex; align-items: center; gap: 10px; margin-top: 10px; padding: 12px 25px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-size: 13px; font-weight: 700; border-radius: 4px; transition: 0.3s; }
+        .btn-insta:hover { background: var(--accent); color: var(--bg-dark); }
+
+        /* --- SERVIÇOS (12 ITENS COMPLETOS) --- */
+        .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 60px; }
+        .service-card { background: var(--card-bg); padding: 45px 30px; border-radius: 12px; text-align: center; transition: var(--transicao); border: 1px solid rgba(255,255,255,0.03); }
+        .service-card:hover { border-color: var(--accent); transform: translateY(-12px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+        .service-card i { font-size: 42px; color: var(--accent); margin-bottom: 20px; }
+        .service-card h3 { font-size: 17px; margin-bottom: 12px; border-bottom: 1px solid rgba(255,140,0,0.1); padding-bottom: 12px; }
+        .service-card p { font-size: 14px; color: #a0a0a0; line-height: 1.6; }
+
+        /* --- MARCAS ZOOM --- */
+        .brands-section { padding: 80px 0; background: #0c0d0f; margin: 50px 0; }
+        .brands-grid { display: flex; justify-content: center; align-items: center; gap: 80px; flex-wrap: wrap; }
+        .brand-box { width: 180px; transition: var(--transicao); cursor: pointer; }
+        .brand-box img { width: 100%; height: auto; filter: grayscale(1) brightness(0.7); opacity: 0.6; transition: var(--transicao); }
+        .brand-box:hover { transform: scale(1.2); }
+        .brand-box:hover img { filter: grayscale(0) brightness(1); opacity: 1; }
 
         /* --- AGENDAMENTO --- */
-        .agendamento-section { padding: 100px 0; background: #0e1013; }
-        .agendamento-container { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 50px 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .agendamento-header { text-align: center; margin-bottom: 45px; }
-        .agendamento-header h2 { font-size: 32px; color: var(--white); }
-        .agendamento-header p { color: var(--accent); font-weight: 700; margin-top: 8px; font-size: 14px; text-transform: uppercase; }
-        
-        .agendamento-grid { display: grid; grid-template-columns: 1fr 1.8fr; gap: 40px; }
-        .agendamento-info { background: rgba(255,255,255,0.02); padding: 35px; border-radius: 8px; border-left: 4px solid var(--accent); }
-        .agendamento-info h3 { font-family: 'Orbitron'; font-size: 18px; margin-bottom: 25px; color: var(--accent); }
-        .agendamento-info p { font-size: 14px; line-height: 2; color: var(--text-gray); margin-bottom: 15px; }
-
+        .agendamento-section { padding: 100px 0; }
+        .agendamento-container { background: var(--card-bg); border-radius: 15px; padding: 50px; border: 1px solid rgba(255,255,255,0.05); }
+        .agendamento-grid { display: grid; grid-template-columns: 1fr 1.8fr; gap: 50px; }
+        .agendamento-info { border-left: 4px solid var(--accent); padding-left: 30px; background: rgba(255,255,255,0.02); padding: 35px; border-radius: 0 10px 10px 0; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .form-group { display: flex; flex-direction: column; }
-        .form-group.full { grid-column: 1 / -1; }
-        .form-group label { font-size: 11px; font-weight: 700; color: var(--text-gray); margin-bottom: 8px; text-transform: uppercase; }
-        
-        .form-group input, .form-group select, .form-group textarea { background: #0a0b0d; border: 1px solid #333; color: white; padding: 14px; border-radius: 6px; font-family: 'Inter'; font-size: 14px; outline: none; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
-        
-        .btn-enviar { width: 100%; padding: 18px; background: var(--wa-green); color: white; border: none; border-radius: 6px; font-weight: 800; font-family: 'Inter'; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-top: 15px; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn-enviar:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4); }
+        .form-group label { font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 8px; display: block; text-transform: uppercase; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; background: #050505; border: 1px solid #222; color: white; padding: 14px; border-radius: 8px; outline: none; margin-bottom: 20px; font-family: 'Inter'; }
+        .btn-enviar { width: 100%; padding: 20px; background: var(--wa-green); color: white; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.3s; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+
+        /* --- WHATSAPP SEM LINHA --- */
+        .remove-underline { text-decoration: none !important; border-bottom: none !important; color: #2e86de; font-weight: 700; transition: 0.3s; display: inline-block; }
+        .remove-underline:hover { color: var(--accent); }
 
         /* --- LOCALIZAÇÃO --- */
-        .contato-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 40px; }
-        .info-box { background: var(--card-bg); padding: 35px; border-radius: 8px; border: 1px solid rgba(255,140,0,0.1); }
+        .contato-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin: 40px 0; }
+        .info-box { background: var(--card-bg); padding: 40px; border-radius: 15px; border: 1px solid rgba(255,140,0,0.1); }
         .info-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px; }
-        .info-item i { color: var(--accent); font-size: 20px; width: 25px; margin-top: 4px; }
-        .info-item p, .info-item a { color: var(--text-gray); text-decoration: none; font-size: 15px; line-height: 1.6; }
+        .info-item i { color: var(--accent); font-size: 22px; }
+        .map-wrapper { width: 100%; height: 500px; border-radius: 20px; overflow: hidden; border: 3px solid var(--card-bg); }
 
-        .map-wrapper { width: 100%; height: 450px; border-radius: 12px; overflow: hidden; border: 2px solid var(--card-bg); position: relative; }
+        /* --- RODAPÉ --- */
+        footer { padding: 80px 0; background: #030303; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-logo img { height: 135px; width: auto; margin-bottom: 25px; }
 
-        .wa-float { position: fixed; bottom: 30px; right: 30px; background: var(--wa-green); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 30px; z-index: 1000; box-shadow: 0 10px 20px rgba(0,0,0,0.4); text-decoration: none; }
-
-        footer { padding: 40px 0; background: #050505; text-align: center; font-size: 11px; color: var(--text-gray); }
-
-        @media (max-width: 900px) { .contato-grid, .agendamento-grid { grid-template-columns: 1fr; } .form-grid { grid-template-columns: 1fr; } }
+        .wa-float { position: fixed; bottom: 35px; right: 35px; background: var(--wa-green); width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; z-index: 1000; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-decoration: none; }
+        
+        @media (max-width: 900px) { .contato-grid, .agendamento-grid { grid-template-columns: 1fr; } .form-grid { grid-template-columns: 1fr; } .logo-nav img { height: 60px; } }
     </style>
 </head>
 <body>
+
+    <img src="logo-voltec.png" alt="Fundo Voltec" class="bg-fixed-logo">
 
     <a href="https://wa.me/5541998267967" class="wa-float" target="_blank">
         <i class="fa-brands fa-whatsapp"></i>
@@ -106,11 +158,12 @@
 
     <div class="container">
         <nav>
-            <div class="logo">VOL<span>TEC</span></div>
+            <a href="#" class="logo-nav"><img src="logo-voltec.png" alt="Voltec Logo"></a>
             <div class="nav-links">
                 <a href="#inicio">Início</a>
+                <a href="#empresa">Sobre</a>
                 <a href="#servicos">Serviços</a>
-                <a href="#agendar">Agendamento</a>
+                <a href="#agendar">Agendar</a>
                 <a href="#contato">Contato</a>
             </div>
         </nav>
@@ -119,76 +172,120 @@
     <section class="hero" id="inicio">
         <div class="marcas-bg-carousel">
             <div class="marcas-bg-track">
-                <img src="https://cdn.worldvectorlogo.com/logos/scania-1.svg" alt="Scania">
-                <img src="https://cdn.worldvectorlogo.com/logos/volvo-1.svg" alt="Volvo">
-                <img src="https://cdn.worldvectorlogo.com/logos/mercedes-benz-9.svg" alt="Mercedes">
-                <img src="https://cdn.worldvectorlogo.com/logos/volkswagen-10.svg" alt="VW">
-                <img src="https://cdn.worldvectorlogo.com/logos/iveco.svg" alt="Iveco">
-                <img src="https://cdn.worldvectorlogo.com/logos/scania-1.svg" alt="Scania">
-                <img src="https://cdn.worldvectorlogo.com/logos/volvo-1.svg" alt="Volvo">
-                <img src="https://cdn.worldvectorlogo.com/logos/mercedes-benz-9.svg" alt="Mercedes">
-                <img src="https://cdn.worldvectorlogo.com/logos/volkswagen-10.svg" alt="VW">
-                <img src="https://cdn.worldvectorlogo.com/logos/iveco.svg" alt="Iveco">
+                <img src="volvo.png" alt="Volvo">
+                <img src="daf.png" alt="DAF">
+                <img src="scania.png" alt="Scania">
+                <img src="volvo.png" alt="Volvo">
+                <img src="daf.png" alt="DAF">
+                <img src="scania.png" alt="Scania">
             </div>
         </div>
 
-        <div class="container">
-            <h1>Mecatrônica Diesel de Alta Precisão</h1>
-            <p>TECNOLOGIA E CONFIANÇA PARA O SEU PESADO</p>
+        <div class="hero-content container">
+            <h1 data-aos="fade-up">Mecatrônica Diesel de Alta Precisão</h1>
+            <p data-aos="fade-up" data-aos-delay="200">TECNOLOGIA E CONFIANÇA PARA O SEU PESADO</p>
             <div class="video-box" data-aos="zoom-in">
-                <video autoplay muted loop playsinline controls>
+                <video controls loop playsinline>
                     <source src="video01.mp4" type="video/mp4">
-                    Seu navegador não suporta a exibição de vídeos.
                 </video>
             </div>
         </div>
     </section>
 
-    <section class="container" id="servicos" style="padding: 80px 0;">
+    <section class="about-section" id="empresa">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-card" data-aos="fade-right">
+                    <h2>A EMPRESA</h2>
+                    <p>No mercado desde 2011, foco em qualidade na manutenção de caminhões Diesel, diagnóstico de falhas e programação de parâmetros de alta complexidade.</p>
+                    <p>Oferecemos soluções fundamentais voltadas à máxima performance e satisfação total dos nossos clientes.</p>
+                </div>
+                <div class="about-card" data-aos="fade-left">
+                    <h2>SIGA A VOLTEC</h2>
+                    <p>Acompanhe nosso trabalho, equipe e resultados diários diretamente no nosso Instagram oficial.</p>
+                    <a href="https://www.instagram.com/voltecmecatronica" class="btn-insta" target="_blank">
+                        <i class="fa-brands fa-instagram"></i> @VOLTECMECATRONICA
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" id="servicos" style="padding: 100px 0;">
         <div style="text-align: center; margin-bottom: 50px;">
-            <h2 style="font-size: 32px;">Nossos Serviços</h2>
-            <p style="color: var(--accent); font-weight: 700;">VOLTEC MECATRÔNICA</p>
+            <h2 style="font-size: 32px;">Nossos Serviços Especializados</h2>
+            <p style="color: var(--accent); font-weight: 700;">TECNOLOGIA DE PONTA EM CADA COMPONENTE</p>
         </div>
         <div class="servicos-grid">
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up">
                 <i class="fa-solid fa-truck-pickup"></i>
                 <h3>Mecânica Especializada</h3>
-                <p>Especialistas em mecânica diesel com ferramentaria de alta tecnologia.</p>
+                <p>Especialistas em mecânica diesel com ferramentaria de alta tecnologia para motores pesados.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="50">
                 <i class="fa-solid fa-microchip"></i>
                 <h3>Diagnóstico Avançado</h3>
-                <p>Análise de sistemas eletrônicos completa para identificação precisa.</p>
+                <p>Análise de sistemas eletrônicos completa para identificação precisa de qualquer falha.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="100">
                 <i class="fa-solid fa-sliders"></i>
                 <h3>Parametrização</h3>
-                <p>Ajuste de softwares e reprogramação de módulos.</p>
+                <p>Ajuste de softwares, reprogramação de módulos e regulagem técnica de válvulas.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="150">
                 <i class="fa-solid fa-check-double"></i>
                 <h3>Padrão de Qualidade</h3>
-                <p>Processos rigorosos voltados à satisfação total.</p>
+                <p>Processos rigorosos voltados à satisfação total e durabilidade do serviço executado.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up">
                 <i class="fa-solid fa-gauge-high"></i>
                 <h3>Chipagem de Software</h3>
-                <p>Otimização para ganho de performance e economia.</p>
+                <p>Otimização de software para ganho de performance e redução do consumo de combustível.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="50">
                 <i class="fa-solid fa-shield-virus"></i>
                 <h3>Manutenção Preventiva</h3>
-                <p>Revisões sistemáticas e calibragem de câmbio.</p>
+                <p>Revisões sistemáticas, verificação de freios e calibragem de câmbio automatizado.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="100">
                 <i class="fa-solid fa-microscope"></i>
                 <h3>Tecnologia de Ponta</h3>
-                <p>Uso dos scanners e softwares mais modernos.</p>
+                <p>Uso dos scanners e softwares mais modernos do mercado mundial de diagnóstico diesel.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="150">
                 <i class="fa-solid fa-gears"></i>
                 <h3>Recondicionamento</h3>
-                <p>Reparo completo e retífica de motores e transmissões.</p>
+                <p>Reparo completo e retífica de motores, caixas de transmissão e sistemas de diferencial.</p>
+            </div>
+            <div class="service-card" data-aos="fade-up">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>Elétrica Completa</h3>
+                <p>Manutenção técnica de chicotes, alternadores e motores de partida diesel.</p>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-aos-delay="50">
+                <i class="fa-solid fa-fan"></i>
+                <h3>Ar Condicionado</h3>
+                <p>Manutenção preventiva e corretiva de sistemas de climatização de cabine.</p>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                <i class="fa-solid fa-wind"></i>
+                <h3>Turbinas e Intercooler</h3>
+                <p>Teste de pressão, limpeza de sistema de ar e troca de turbocompressores.</p>
+            </div>
+            <div class="service-card" data-aos="fade-up" data-aos-delay="150">
+                <i class="fa-solid fa-link"></i>
+                <h3>Suspensão e Direção</h3>
+                <p>Revisão de suspensão a ar e sistemas de direção hidráulica pesada.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="brands-section">
+        <div class="container" data-aos="fade-up">
+            <div class="brands-grid">
+                <div class="brand-box"><img src="volvo.png" alt="Volvo"></div>
+                <div class="brand-box"><img src="daf.png" alt="DAF"></div>
+                <div class="brand-box"><img src="scania.png" alt="Scania"></div>
             </div>
         </div>
     </section>
@@ -196,10 +293,6 @@
     <section class="agendamento-section" id="agendar">
         <div class="container">
             <div class="agendamento-container" data-aos="fade-up">
-                <div class="agendamento-header">
-                    <h2>AGENDAMENTO ONLINE</h2>
-                    <p>Solicite seu atendimento via WhatsApp</p>
-                </div>
                 <div class="agendamento-grid">
                     <div class="agendamento-info">
                         <h3>COMO FUNCIONA?</h3>
@@ -209,20 +302,25 @@
                     </div>
                     <form id="agendamentoForm">
                         <div class="form-grid">
-                            <div class="form-group"><label>NOME</label><input type="text" id="nome" placeholder="Ex: João Silva" required></div>
+                            <div class="form-group"><label>NOME COMPRETO</label><input type="text" id="nome" placeholder="Ex: João Silva" required></div>
                             <div class="form-group"><label>TELEFONE</label><input type="text" id="telefone" placeholder="Ex: (41) 99999-9999" required></div>
-                            <div class="form-group"><label>MODELO</label><input type="text" id="caminhao" placeholder="Ex: Scania R450" required></div>
+                            <div class="form-group"><label>MODELO VEÍCULO</label><input type="text" id="caminhao" placeholder="Ex: Scania R450" required></div>
                             <div class="form-group"><label>PLACA</label><input type="text" id="placa" placeholder="Ex: ABC-1234"></div>
-                            <div class="form-group full">
-                                <label>SERVIÇO</label>
-                                <select id="servico" required>
-                                    <option value="Revisão">Revisão Geral</option>
-                                    <option value="Diagnóstico">Diagnóstico</option>
-                                    <option value="Chipagem">Chipagem</option>
+                            <div class="form-group full"><label>SERVIÇO</label>
+                                <select id="servico">
+                                    <option>Revisão Geral</option>
+                                    <option>Diagnóstico Eletrônico</option>
+                                    <option>Chipagem / Performance</option>
+                                    <option>Manutenção de Motor</option>
                                 </select>
                             </div>
                             <div class="form-group"><label>DATA</label><input type="date" id="data" required></div>
-                            <div class="form-group"><label>PERÍODO</label><select id="periodo"><option>Manhã</option><option>Tarde</option></select></div>
+                            <div class="form-group"><label>PERÍODO</label>
+                                <select id="periodo">
+                                    <option>Manhã</option>
+                                    <option>Tarde</option>
+                                </select>
+                            </div>
                             <div class="form-group full"><textarea id="observacoes" placeholder="Como podemos ajudar?" rows="3"></textarea></div>
                         </div>
                         <button type="submit" class="btn-enviar"><i class="fa-brands fa-whatsapp"></i> ENVIAR SOLICITAÇÃO</button>
@@ -232,37 +330,21 @@
         </div>
     </section>
 
-    <section id="contato" style="padding: 100px 0; background: #0c0d0f;">
+    <section id="contato" style="padding: 100px 0; background: rgba(12, 13, 15, 0.9);">
         <div class="container">
-            <div style="text-align: center; margin-bottom: 40px;">
-                <h2 style="font-size: 32px;">LOCALIZAÇÃO</h2>
-                <p style="color: var(--accent); font-weight: 700;">ONDE ESTAMOS</p>
-            </div>
-
             <div class="contato-grid">
                 <div class="info-box" data-aos="fade-right">
-                    <h2 style="margin-bottom: 20px; color: var(--accent);">ENDEREÇO</h2>
-                    <div class="info-item">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <p>PR-423, 1141 - Jardim Itaqui<br>Campo Largo, CEP 83604-142 - PR</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-phone"></i>
-                        <p>(41) 99826-7967</p>
-                    </div>
+                    <h2 style="margin-bottom: 25px; color: var(--accent);">CONTATO</h2>
+                    <div class="info-item"><i class="fa-solid fa-location-dot"></i><p>PR-423, 1141 - Jardim Itaqui<br>Campo Largo - PR</p></div>
                     <div class="info-item">
                         <i class="fa-brands fa-whatsapp" style="color:var(--wa-green)"></i>
-                        <a href="https://wa.me/5541998267967" target="_blank" style="color: #2e86de; font-weight: bold;">
-                            (41) 99826-7967<br>Click aqui e entre agora em contato por whatsapp
+                        <a href="https://wa.me/5541998267967" target="_blank" class="remove-underline">
+                            (41) 99826-7967<br>Click aqui e entre agora em contato
                         </a>
-                    </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-envelope"></i>
-                        <a href="mailto:voltecmecatronica@gmail.com">voltecmecatronica@gmail.com</a>
                     </div>
                 </div>
                 <div class="map-wrapper" data-aos="fade-left">
-                    <iframe width="100%" height="100%" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.830607185074!2d-49.4678857!3d-25.4439775!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dd16e259b38435%3A0x6a053073079b7b9f!2sPR-423%2C%201141%20-%20Jardim%20Itaqui%2C%20Campo%20Largo%20-%20PR%2C%2083604-142!5e0!3m2!1spt-BR!2sbr!4v1700000000000"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.834575314051!2d-49.5445214!3d-25.474619!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dcee0045230001%3A0x6fda4166ea71b0b!2sVoltec%20Mecatr%C3%B4nica%20Diesel!5e0!3m2!1spt-BR!2sbr!4v1713500000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
@@ -270,24 +352,18 @@
 
     <footer>
         <div class="container">
-            <div class="logo">VOL<span>TEC</span></div>
-            <p style="margin-top: 15px; opacity: 0.6;">VOLTEC MECATRÔNICA DIESEL © 2026 - Campo Largo / PR</p>
+            <div class="footer-logo"><img src="logo-voltec.png" alt="Voltec Logo"></div>
+            <p>VOLTEC MECATRÔNICA DIESEL © 2026 - Campo Largo / PR</p>
         </div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 1000, once: true });
-        
-        // Função do formulário
         document.getElementById('agendamentoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const nome = document.getElementById('nome').value;
-            const caminhao = document.getElementById('caminhao').value;
-            const servico = document.getElementById('servico').value;
-            
-            const msg = `*Agendamento Voltec*%0A*Nome:* ${nome}%0A*Caminhão:* ${caminhao}%0A*Serviço:* ${servico}`;
-            window.open(`https://wa.me/5541998267967?text=${msg}`, '_blank');
+            const msg = `*Agendamento Voltec*%0A*Cliente:* ${document.getElementById('nome').value}%0A*Veículo:* ${document.getElementById('caminhao').value}`;
+            window.open(`https://wa.me/5541998267967?text=${encodeURIComponent(msg)}`, '_blank');
         });
     </script>
 </body>
