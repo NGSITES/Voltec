@@ -25,6 +25,10 @@
         body { background-color: var(--bg-dark); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.6; }
         h1, h2, h3 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 3px; }
 
+        /* --- ANIMAÇÃO DE REVELAÇÃO --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
         /* --- LOGO FIXA NO FUNDO --- */
         .bg-fixed-logo {
             position: fixed;
@@ -86,7 +90,7 @@
         .brand-box:hover { transform: scale(1.1); filter: grayscale(0); opacity: 1; }
         .brand-box img { width: 100%; height: auto; }
 
-        /* --- AGENDAMENTO (TEXTO COMPLETO) --- */
+        /* --- AGENDAMENTO --- */
         .agendamento-section { padding: 100px 0; }
         .agendamento-container { background: var(--card-bg); border-radius: 20px; padding: 60px; border: 1px solid rgba(255,255,255,0.05); }
         .agendamento-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; }
@@ -108,7 +112,7 @@
         }
         .btn-enviar:hover { background: #1eb954; transform: translateY(-3px); }
 
-        /* --- CONTATO (COMPLETO COM TODOS OS ÍCONES E CEP) --- */
+        /* --- CONTATO COMPLETO --- */
         .contato-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; margin: 100px 0; }
         .info-box { background: var(--card-bg); padding: 50px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
         .info-item { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 35px; }
@@ -126,7 +130,17 @@
         footer { padding: 100px 0; background: #020202; text-align: center; border-top: 1px solid rgba(255,255,255,0.03); }
         .footer-logo img { height: 140px; width: auto; margin-bottom: 35px; }
         
-        @media (max-width: 900px) { .contato-grid, .agendamento-grid, .about-grid { grid-template-columns: 1fr; } .form-grid { grid-template-columns: 1fr; } .btn-enviar { grid-column: span 1; } }
+        /* --- AJUSTES MOBILE (FIX TABELA E LOGOS) --- */
+        @media (max-width: 900px) { 
+            .contato-grid, .agendamento-grid, .about-grid { grid-template-columns: 1fr !important; } 
+            .form-grid { grid-template-columns: 1fr !important; } 
+            .btn-enviar { grid-column: span 1 !important; } 
+            .marcas-bg-carousel img { height: 180px !important; margin: 0 40px !important; opacity: 0.3 !important; }
+            .hero { min-height: 600px; padding: 60px 0; }
+            .hero h1 { font-size: 28px !important; }
+            .agendamento-container, .info-box { padding: 30px 20px !important; }
+            .nav-links { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -138,7 +152,7 @@
     </a>
 
     <div class="container">
-        <nav>
+        <nav class="reveal">
             <a href="#" class="logo-nav"><img src="logo-voltec.png" alt="Voltec"></a>
             <div class="nav-links">
                 <a href="#inicio">Início</a>
@@ -161,7 +175,7 @@
                 <img src="scania.png" alt="Scania">
             </div>
         </div>
-        <div class="hero-content container">
+        <div class="hero-content container reveal">
             <h1>Mecatrônica Diesel de Alta Precisão</h1>
             <p>TECNOLOGIA E CONFIANÇA PARA O SEU PESADO</p>
             <div class="video-box">
@@ -174,7 +188,7 @@
     </section>
 
     <section class="about-section" id="empresa">
-        <div class="container">
+        <div class="container reveal">
             <div class="about-grid">
                 <div class="about-card">
                     <h2><i class="fa-solid fa-gears" style="margin-right:15px; color:var(--accent);"></i>A EMPRESA</h2>
@@ -192,22 +206,22 @@
 
     <section class="container" id="servicos">
         <div class="servicos-grid">
-            <div class="service-card"><i class="fa-solid fa-truck-pickup"></i><h3>Mecânica Pesada</h3><p>Especialistas em motores diesel de alta performance com ferramentaria de precisão.</p></div>
-            <div class="service-card"><i class="fa-solid fa-microchip"></i><h3>Diagnóstico Avançado</h3><p>Leitura técnica de módulos e sensores utilizando scanners de última geração.</p></div>
-            <div class="service-card"><i class="fa-solid fa-sliders"></i><h3>Parametrização</h3><p>Reprogramação de softwares e ajuste de parâmetros originais de fábrica.</p></div>
-            <div class="service-card"><i class="fa-solid fa-check-double"></i><h3>Qualidade Certificada</h3><p>Processos rigorosos voltados à durabilidade extrema do serviço executado.</p></div>
-            <div class="service-card"><i class="fa-solid fa-gauge-high"></i><h3>Chipagem (Performance)</h3><p>Otimização de torque e potência visando performance e economia real de combustível.</p></div>
-            <div class="service-card"><i class="fa-solid fa-shield-virus"></i><h3>Preventiva</h3><p>Revisões sistemáticas e calibração de sistemas para evitar paradas indesejadas.</p></div>
-            <div class="service-card"><i class="fa-solid fa-microscope"></i><h3>Tecnologia Mecatrônica</h3><p>Integração total entre sistemas mecânicos e eletrônicos para diagnóstico preciso.</p></div>
-            <div class="service-card"><i class="fa-solid fa-gears"></i><h3>Retífica e Recondicionamento</h3><p>Reparo completo de motores, diferenciais e caixas de transmissão.</p></div>
-            <div class="service-card"><i class="fa-solid fa-bolt"></i><h3>Elétrica Pesada</h3><p>Reparo de chicotes, alternadores e sistemas de partida diesel.</p></div>
-            <div class="service-card"><i class="fa-solid fa-fan"></i><h3>Ar Condicionado</h3><p>Manutenção técnica e higienização de sistemas de climatização de cabine.</p></div>
-            <div class="service-card"><i class="fa-solid fa-wind"></i><h3>Turbinas</h3><p>Análise técnica, venda e troca de turbocompressores e sistemas de ar.</p></div>
-            <div class="service-card"><i class="fa-solid fa-link"></i><h3>Suspensão e Direção</h3><p>Manutenção em sistemas de estabilidade, suspensão a ar e direção hidráulica.</p></div>
+            <div class="service-card reveal"><i class="fa-solid fa-truck-pickup"></i><h3>Mecânica Pesada</h3><p>Especialistas em motores diesel de alta performance com ferramentaria de precisão.</p></div>
+            <div class="service-card reveal"><i class="fa-solid fa-microchip"></i><h3>Diagnóstico Avançado</h3><p>Leitura técnica de módulos e sensores utilizando scanners de última geração.</p></div>
+            <div class="service-card reveal"><i class="fa-solid fa-sliders"></i><h3>Parametrização</h3><p>Reprogramação de softwares e ajuste de parâmetros originais de fábrica.</p></div>
+            <div class="service-card reveal"><i class="fa-solid fa-check-double"></i><h3>Qualidade Certificada</h3><p>Processos rigorosos voltados à durabilidade extrema do serviço executado.</p></div>
+            <div class="service-card reveal"><i class="fa-solid fa-gauge-high"></i><h3>Chipagem (Performance)</h3><p>Otimização de torque e potência visando performance e economia real de combustível.</p></div>
+            <div class="service-card reveal"><i class="fa-solid fa-shield-virus"></i><h3>Preventiva</h3><p>Revisões sistemáticas e calibração de sistemas para evitar paradas indesejadas.</p></div>
+            <div class="service-card reveal"><i class="fa-solid fa-microscope"></i><h3>Tecnologia Mecatrônica</h3><p>Integração total entre sistemas mecânicos e eletrônicos para diagnóstico preciso.</p></div>
+            <div class="service-card reveal"><i class="fa-solid fa-gears"></i><h3>Retífica e Recondicionamento</h3><p>Reparo completo de motores, diferenciais e caixas de transmissão.</p></div>
+            <div class="service-card reveal"><i class="fa-solid fa-bolt"></i><h3>Elétrica Pesada</h3><p>Reparo de chicotes, alternadores e sistemas de partida diesel.</p></div>
+            <div class="service-card reveal"><i class="fa-solid fa-fan"></i><h3>Ar Condicionado</h3><p>Manutenção técnica e higienização de sistemas de climatização de cabine.</p></div>
+            <div class="service-card reveal"><i class="fa-solid fa-wind"></i><h3>Turbinas</h3><p>Análise técnica, venda e troca de turbocompressores e sistemas de ar.</p></div>
+            <div class="service-card reveal"><i class="fa-solid fa-link"></i><h3>Suspensão e Direção</h3><p>Manutenção em sistemas de estabilidade, suspensão a ar e direção hidráulica.</p></div>
         </div>
     </section>
 
-    <section class="brands-middle-section">
+    <section class="brands-middle-section reveal">
         <div class="container">
             <div class="brands-grid">
                 <div class="brand-box"><img src="volvo.png" alt="Volvo"></div>
@@ -218,16 +232,16 @@
     </section>
 
     <section class="agendamento-section" id="agendar">
-        <div class="container">
+        <div class="container reveal">
             <div class="agendamento-container">
                 <div class="agendamento-grid">
                     <div class="agendamento-text">
                         <h2>AGENDAMENTO</h2>
                         <p>Agende seu atendimento de forma rápida e prática.</p>
                         <ul>
-                            <li><i class="fa-solid fa-check"></i> Escolha o serviço ideal</li>
-                            <li><i class="fa-solid fa-check"></i> Defina a data e período</li>
-                            <li><i class="fa-solid fa-check"></i> Finalize no WhatsApp</li>
+                            <li><i class="fa-solid fa-check" style="color: var(--accent);"></i> Escolha o serviço ideal</li>
+                            <li><i class="fa-solid fa-check" style="color: var(--accent);"></i> Defina a data e período</li>
+                            <li><i class="fa-solid fa-check" style="color: var(--accent);"></i> Finalize no WhatsApp</li>
                         </ul>
                     </div>
                     <form id="agendamentoForm">
@@ -248,7 +262,7 @@
                             </div>
                             <div class="form-group"><label>DATA DESEJADA</label><input type="date" id="data" required></div>
                             <div class="form-group"><label>PERÍODO</label><select id="periodo"><option>Manhã</option><option>Tarde</option></select></div>
-                            <div class="form-group full"><textarea id="observacoes" rows="3" placeholder="Conte-nos o que o veículo apresenta..."></textarea></div>
+                            <div class="form-group full"><textarea id="observacoes" rows="3" placeholder="Resumo do problema..."></textarea></div>
                         </div>
                         <button type="submit" class="btn-enviar"><i class="fa-brands fa-whatsapp"></i> SOLICITAR ATENDIMENTO</button>
                     </form>
@@ -257,44 +271,14 @@
         </div>
     </section>
 
-    <section id="contato" class="container">
+    <section id="contato" class="container reveal">
         <div class="contato-grid">
             <div class="info-box">
                 <h2 style="margin-bottom: 40px; color: var(--accent);">CONTATO</h2>
-                
-                <div class="info-item">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <div>
-                        <h4>ENDEREÇO</h4>
-                        <p>PR-423, 1141 - Jardim Itaqui<br>Campo Largo, PR - CEP: 83604-142</p>
-                    </div>
-                </div>
-
-                <div class="info-item">
-                    <i class="fa-solid fa-phone"></i>
-                    <div>
-                        <h4>TELEFONE</h4>
-                        <p>(41) 99826-7967</p>
-                    </div>
-                </div>
-
-                <div class="info-item">
-                    <i class="fa-brands fa-whatsapp" style="color:var(--wa-green)"></i>
-                    <div>
-                        <h4>WHATSAPP</h4>
-                        <a href="https://wa.me/5541998267967" target="_blank" class="remove-underline">
-                            (41) 99826-7967<br>Click aqui e fale com um especialista
-                        </a>
-                    </div>
-                </div>
-
-                <div class="info-item">
-                    <i class="fa-solid fa-envelope"></i>
-                    <div>
-                        <h4>E-MAIL</h4>
-                        <p>voltecmecatronica@gmail.com</p>
-                    </div>
-                </div>
+                <div class="info-item"><i class="fa-solid fa-location-dot"></i><div><h4>ENDEREÇO</h4><p>PR-423, 1141 - Jardim Itaqui<br>Campo Largo, PR - CEP: 83604-142</p></div></div>
+                <div class="info-item"><i class="fa-solid fa-phone"></i><div><h4>TELEFONE</h4><p>(41) 99826-7967</p></div></div>
+                <div class="info-item"><i class="fa-brands fa-whatsapp" style="color:var(--wa-green)"></i><div><h4>WHATSAPP</h4><a href="https://wa.me/5541998267967" target="_blank" class="remove-underline">(41) 99826-7967<br>Click aqui e fale com um especialista</a></div></div>
+                <div class="info-item"><i class="fa-solid fa-envelope"></i><div><h4>E-MAIL</h4><p>voltecmecatronica@gmail.com</p></div></div>
             </div>
             <div class="map-wrapper">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.837332766467!2d-49.4633783!3d-25.4437299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dcee007204ef83%3A0xc03697e324021200!2sPR-423%2C%201141%20-%20Jardim%20Itaqui%2C%20Campo%20Largo%20-%20PR%2C%2083604-142!5e0!3m2!1spt-BR!2sbr!4v1715000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
@@ -307,6 +291,13 @@
     </footer>
 
     <script>
+        // SCRIPT ANIMAÇÃO
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // SCRIPT WHATSAPP
         document.getElementById('agendamentoForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const msg = `*Agendamento Voltec*%0A*Cliente:* ${document.getElementById('nome').value}%0A*Caminhão:* ${document.getElementById('caminhao').value}%0A*Serviço:* ${document.getElementById('servico').value}`;
