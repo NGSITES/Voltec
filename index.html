@@ -7,139 +7,320 @@
     
     <link rel="icon" type="image/png" sizes="512x512" href="logo-voltec.png">
 
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
-            --bg-dark: #050608;
-            --card-bg: rgba(18, 20, 23, 0.9);
+            --bg-dark: #030405; 
+            --card-bg: rgba(15, 17, 20, 0.65); 
             --accent: #ff8c00; 
-            --accent-glow: rgba(255, 140, 0, 0.2);
+            --accent-hover: #ffaa33;
+            --accent-glow: rgba(255, 140, 0, 0.3);
             --white: #ffffff;
             --wa-green: #25d366;
+            --wa-green-hover: #1eb954;
         }
+
+        /* --- SCROLLBAR CUSTOMIZADA --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { background-color: var(--bg-dark); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; line-height: 1.6; }
-        h1, h2, h3 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 3px; }
+        body { 
+            background-color: var(--bg-dark); 
+            color: var(--white); 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+            line-height: 1.7; 
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 3px; }
 
-        /* --- ANIMAÇÃO DE REVELAÇÃO --- */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* --- ANIMAÇÕES DE REVELAÇÃO --- */
+        .reveal { opacity: 0; transform: translateY(40px) scale(0.98); transition: all 1s cubic-bezier(0.25, 1, 0.5, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
 
         /* --- LOGO FIXA NO FUNDO --- */
         .bg-fixed-logo {
             position: fixed;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 55%; opacity: 0.04; filter: blur(15px); z-index: -1; pointer-events: none;
+            width: 60%; opacity: 0.03; filter: blur(20px); z-index: -1; pointer-events: none;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; position: relative; }
+        .container { max-width: 1250px; margin: 0 auto; padding: 0 30px; position: relative; }
 
         /* --- NAVEGAÇÃO PREMIUM --- */
-        nav { 
-            padding: 20px 0; display: flex; justify-content: space-between; align-items: center; 
-            border-bottom: 1px solid rgba(255,255,255,0.03); backdrop-filter: blur(15px);
+        nav {
+            padding: 20px 0; display: flex; justify-content: space-between; align-items: center;
+            background: rgba(3, 4, 5, 0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .logo-nav img { height: 90px; width: auto; }
-        .nav-links a { color: var(--white); text-decoration: none; margin-left: 35px; font-size: 11px; font-weight: 700; font-family: 'Orbitron'; transition: 0.3s; opacity: 0.7; }
-        .nav-links a:hover { opacity: 1; color: var(--accent); }
+        .logo-nav img { height: 140px; width: auto; transition: transform 0.4s ease; filter: drop-shadow(0 0 15px rgba(255,140,0,0.2)); }
+        .logo-nav:hover img { transform: scale(1.05); }
+        
+        .nav-links a { 
+            color: var(--white); text-decoration: none; margin-left: 50px; font-size: 14px; 
+            font-weight: 700; font-family: 'Orbitron'; transition: all 0.4s ease; opacity: 0.7; 
+            letter-spacing: 2px; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -8px; left: 0;
+            background-color: var(--accent); transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .nav-links a:hover { opacity: 1; color: var(--accent); text-shadow: 0 0 15px var(--accent-glow); }
+        .nav-links a:hover::after { width: 100%; }
 
-        /* --- HERO (LOGOS GIGANTES CENTRALIZADAS) --- */
-        .hero { position: relative; padding: 120px 0; overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 850px; }
-        .marcas-bg-carousel { position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 100%; display: flex; align-items: center; z-index: 1; opacity: 0.08; pointer-events: none; }
-        .marcas-bg-track { display: flex; align-items: center; white-space: nowrap; animation: rolarInfinita 25s linear infinite; }
-        .marcas-bg-carousel img { height: 450px; width: auto; margin: 0 180px; filter: grayscale(1) brightness(15); }
+        /* --- HERO (CINEMATOGRÁFICA) --- */
+        .hero { position: relative; padding: 150px 0; overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 90%);
+            z-index: 2; pointer-events: none;
+        }
+
+        .marcas-bg-carousel { position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 100%; display: flex; align-items: center; z-index: 1; opacity: 0.05; pointer-events: none; }
+        .marcas-bg-track { display: flex; align-items: center; white-space: nowrap; animation: rolarInfinita 40s linear infinite; }
+        .marcas-bg-carousel img { height: 500px; width: auto; margin: 0 180px; filter: grayscale(1) brightness(20); }
         @keyframes rolarInfinita { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         .hero-content { position: relative; z-index: 10; text-align: center; width: 100%; }
-        .hero h1 { font-size: clamp(35px, 6vw, 65px); margin-bottom: 15px; }
-        .hero p { color: var(--accent); font-weight: 700; letter-spacing: 8px; margin-bottom: 50px; }
         
-        .video-box { 
-            width: 100%; max-width: 1000px; margin: 0 auto; 
-            border: 1px solid rgba(255,140,0,0.2); border-radius: 24px; overflow: hidden; 
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8); background: #000; position: relative; z-index: 20;
+        .hero h1 { 
+            font-size: clamp(40px, 6.5vw, 75px); margin-bottom: 20px; font-weight: 900;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
-        .video-box video { width: 100%; height: auto; display: block; }
+        .hero p { color: var(--accent); font-weight: 700; letter-spacing: 12px; margin-bottom: 60px; text-shadow: 0 0 20px var(--accent-glow); }
+        
+        .video-box {
+            width: 100%; max-width: 1050px; margin: 0 auto;
+            border: 1px solid rgba(255,140,0,0.3); border-radius: 30px; overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 60px var(--accent-glow); 
+            background: #000; position: relative; z-index: 20;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .video-box:hover { transform: translateY(-10px); box-shadow: 0 50px 120px rgba(0,0,0,1), 0 0 80px var(--accent-glow); }
+        .video-box video { width: 100%; height: auto; display: block; filter: contrast(1.1) saturate(1.1); }
 
         /* --- SOBRE A EMPRESA --- */
-        .about-section { padding: 100px 0; background: rgba(14, 16, 19, 0.5); }
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .about-card { background: var(--card-bg); padding: 50px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
-        .about-card h2 { font-size: 24px; margin-bottom: 25px; color: var(--accent); }
-        .btn-insta { display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 8px; font-family: 'Orbitron'; font-size: 12px; margin-top: 20px; transition: 0.3s; }
-        .btn-insta:hover { background: var(--accent); color: var(--bg-dark); }
+        .about-section { padding: 120px 0; background: linear-gradient(to bottom, var(--bg-dark), #0a0b0d); position: relative; z-index: 30; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .about-card { 
+            background: var(--card-bg); padding: 60px; border-radius: 24px; 
+            border: 1px solid rgba(255,255,255,0.03); backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); transition: 0.4s ease;
+        }
+        .about-card:hover { border-color: rgba(255,140,0,0.2); transform: translateY(-5px); }
+        .about-card h2 { font-size: 26px; margin-bottom: 30px; color: var(--accent); display: flex; align-items: center; gap: 15px; }
+        .about-card h2 i { font-size: 30px; filter: drop-shadow(0 0 10px var(--accent-glow)); }
+        .about-card p { color: #d1d1d1; font-size: 16px; margin-bottom: 15px; }
+        
+        .btn-insta { 
+            display: inline-flex; align-items: center; gap: 12px; padding: 18px 40px; 
+            background: transparent; border: 1px solid var(--accent); color: var(--accent); 
+            text-decoration: none; border-radius: 12px; font-family: 'Orbitron'; font-size: 13px; font-weight: 700; 
+            margin-top: 30px; transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        .btn-insta::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: var(--accent); transition: all 0.4s ease; z-index: -1; }
+        .btn-insta:hover::before { left: 0; }
+        .btn-insta:hover { color: var(--bg-dark); box-shadow: 0 0 30px var(--accent-glow); border-color: transparent; }
 
-        /* --- SERVIÇOS (12 ITENS DETALHADOS) --- */
-        .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 80px; padding-bottom: 100px; }
-        .service-card { background: var(--card-bg); padding: 50px 30px; text-align: center; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
-        .service-card:hover { border-color: var(--accent); transform: translateY(-10px); }
-        .service-card i { font-size: 45px; color: var(--accent); margin-bottom: 25px; }
-        .service-card h3 { font-size: 16px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,140,0,0.1); padding-bottom: 10px; }
-        .service-card p { font-size: 14px; color: #999; }
+        /* --- SERVIÇOS --- */
+        .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 35px; margin-top: 80px; padding-bottom: 120px; }
+        
+        .service-card {
+            cursor: pointer; overflow: hidden; max-height: 420px; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex; flex-direction: column; align-items: center; background: var(--card-bg);
+            padding: 60px 40px; text-align: center; border-radius: 24px; border: 1px solid rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px); position: relative;
+        }
+
+        .service-card::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(255,140,0,0.1), transparent 70%);
+            opacity: 0; transition: 0.6s ease; pointer-events: none;
+        }
+
+        .service-card:hover { border-color: rgba(255,140,0,0.4); transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        .service-card:hover::after { opacity: 1; }
+        .service-card i { font-size: 50px; color: var(--accent); margin-bottom: 30px; transition: transform 0.4s ease; }
+        
+        .service-card:hover i { transform: scale(1.1); filter: drop-shadow(0 0 15px var(--accent-glow)); }
+        
+        .service-card h3 { font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,140,0,0.1); padding-bottom: 15px; width: 100%; }
+        .service-card p { font-size: 15px; color: #a0a0a0; line-height: 1.6; }
+
+        .service-card.open { grid-column: 1 / -1; max-height: 1200px; border-color: var(--accent); background: rgba(20, 22, 26, 0.9); transform: translateY(0); box-shadow: 0 30px 80px rgba(0,0,0,0.8); }
+        .service-card.open > p { display: none; }
+        .service-card.open i { transform: scale(0.8); margin-bottom: 15px; animation-play-state: paused; }
+
+        .expanded-layout { display: none; opacity: 0; width: 100%; margin-top: 10px; padding-top: 40px; border-top: 1px solid rgba(255, 140, 0, 0.2); transition: opacity 0.6s ease; }
+        .service-card.open .expanded-layout { display: flex; flex-direction: row; gap: 50px; opacity: 1; }
+
+        /* --- EFEITO KEN BURNS NAS FOTOS --- */
+        .slideshow-box { flex: 1.2; height: 400px; background: #000; border-radius: 20px; position: relative; overflow: hidden; border: 1px solid rgba(255,140,0,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .slideshow-box img { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; 
+            opacity: 0; transform: scale(1); transition: opacity 1.5s ease-in-out, transform 5s linear; 
+        }
+        .slideshow-box img.show { opacity: 1; transform: scale(1.08); }
+
+        .text-box-large { flex: 1; font-size: 22px; color: #fff; line-height: 1.8; text-align: left; display: flex; align-items: center; font-weight: 300; }
+
+        /* ========================================================= */
+        /* --- ANIMAÇÕES VIVAS DOS ÍCONES (MICRO-INTERAÇÕES) --- */
+        /* ========================================================= */
+        .fa-truck-pickup { animation: drive 2.5s ease-in-out infinite; }
+        .fa-microchip { animation: pulse-tech 3s ease-in-out infinite; }
+        .fa-sliders { animation: move-up-down 2.5s ease-in-out infinite; }
+        .fa-check-double { animation: pop 2s ease-in-out infinite; }
+        .fa-gauge-high { animation: ponteiro 1.5s ease-in-out infinite; transform-origin: bottom center; }
+        .fa-shield-virus { animation: pulse-tech 2.5s ease-in-out infinite; }
+        .fa-microscope { animation: tilt 3s ease-in-out infinite; transform-origin: bottom center; }
+        .fa-gears { animation: girar 6s linear infinite; }
+        .fa-bolt { animation: choque 1.2s infinite; }
+        .fa-fan { animation: girar 1.5s linear infinite; }
+        .fa-wind { animation: blow 2s ease-in-out infinite; }
+        .fa-link { animation: move-up-down 3s ease-in-out infinite; }
+
+        @keyframes drive { 0%, 100% { translate: 0 0; } 50% { translate: 4px -3px; } }
+        @keyframes girar { 0% { rotate: 0deg; } 100% { rotate: 360deg; } }
+        @keyframes blow { 0%, 100% { translate: 0 0; opacity: 1; } 50% { translate: 8px 0; opacity: 0.5; } }
+        @keyframes choque { 0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px var(--accent)); } 50% { opacity: 0.3; filter: none; } }
+        @keyframes ponteiro { 0%, 100% { rotate: -15deg; } 50% { rotate: 20deg; } }
+        @keyframes move-up-down { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+        @keyframes pulse-tech { 0%, 100% { scale: 1; } 50% { scale: 1.15; } }
+        @keyframes tilt { 0%, 100% { rotate: -5deg; } 50% { rotate: 5deg; } }
+        @keyframes pop { 0%, 100% { translate: 0 0; } 20% { translate: 0 -10px; } 40% { translate: 0 0; } }
+
+        @media (max-width: 800px) {
+            .service-card.open .expanded-layout { flex-direction: column; }
+            .slideshow-box { height: 280px; width: 100%; }
+        }
 
         /* --- MARCAS NO MEIO --- */
-        .brands-middle-section { padding: 60px 0; background: rgba(0,0,0,0.3); }
-        .brands-grid { display: flex; justify-content: center; align-items: center; gap: 80px; flex-wrap: wrap; }
-        .brand-box { width: 180px; transition: 0.3s; filter: grayscale(1); opacity: 0.5; }
-        .brand-box:hover { transform: scale(1.1); filter: grayscale(0); opacity: 1; }
-        .brand-box img { width: 100%; height: auto; }
+        .brands-middle-section { padding: 100px 0; background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(15,17,20,0.9), rgba(0,0,0,0.8)); position: relative; z-index: 50; border-top: 1px solid rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .brands-grid { display: flex; justify-content: center; align-items: center; gap: 120px; flex-wrap: wrap; }
+        .brand-box { width: 300px; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(1) brightness(0.7); opacity: 0.5; cursor: pointer; }
+        .brand-box:hover { transform: scale(1.15) translateY(-10px); filter: grayscale(0) brightness(1.2); opacity: 1; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); }
+        .brand-box img { width: 100%; height: auto; display: block; }
+
+        /* --- VÍDEO FINAL COM MÁSCARA --- */
+        .bottom-video-wrapper {
+            position: relative;
+            width: 100%;
+            background-color: var(--bg-dark);
+        }
+
+        .bottom-bg-video {
+            position: sticky;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.25; 
+            pointer-events: none;
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+        }
+
+        .bottom-content-layer {
+            position: relative;
+            z-index: 10;
+            margin-top: -100vh; 
+        }
 
         /* --- AGENDAMENTO --- */
-        .agendamento-section { padding: 100px 0; }
-        .agendamento-container { background: var(--card-bg); border-radius: 20px; padding: 60px; border: 1px solid rgba(255,255,255,0.05); }
-        .agendamento-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; }
-        .agendamento-text h2 { font-size: 28px; color: var(--accent); margin-bottom: 30px; }
-        .agendamento-text p { font-size: 18px; line-height: 1.8; color: #ccc; }
-        .agendamento-text ul { list-style: none; margin-top: 20px; }
-        .agendamento-text li { margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: #999; }
-        .agendamento-text li i { color: var(--accent); }
+        .agendamento-section { padding: 120px 0; }
+        .agendamento-container { 
+            background: rgba(10, 12, 15, 0.75); border-radius: 30px; padding: 70px; 
+            border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+        }
+        .agendamento-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 70px; }
+        .agendamento-text h2 { font-size: 32px; color: var(--accent); margin-bottom: 25px; text-shadow: 0 0 15px var(--accent-glow); }
+        .agendamento-text p { font-size: 18px; line-height: 1.8; color: #ddd; }
+        .agendamento-text ul { list-style: none; margin-top: 30px; }
+        .agendamento-text li { margin-bottom: 20px; display: flex; align-items: center; gap: 15px; color: #aaa; font-size: 16px; }
+        .agendamento-text li i { color: var(--accent); font-size: 20px; background: rgba(255,140,0,0.1); padding: 10px; border-radius: 50%; }
         
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
-        .form-group label { font-size: 11px; font-weight: 700; color: var(--accent); margin-bottom: 10px; display: block; text-transform: uppercase; }
-        .form-group input, .form-group select, .form-group textarea { 
-            width: 100%; background: #0a0b0d; border: 1px solid #333; 
-            color: white; padding: 16px; border-radius: 10px; outline: none; font-family: 'Inter';
-        }
-        .btn-enviar { 
-            grid-column: span 2; width: 100%; padding: 22px; background: var(--wa-green); color: white; border: none; border-radius: 10px; 
-            font-weight: 800; cursor: pointer; font-family: 'Orbitron'; letter-spacing: 2px; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s;
-        }
-        .btn-enviar:hover { background: #1eb954; transform: translateY(-3px); }
-
-        /* --- CONTATO COMPLETO --- */
-        .contato-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; margin: 100px 0; }
-        .info-box { background: var(--card-bg); padding: 50px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
-        .info-item { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 35px; }
-        .info-item i { color: var(--accent); font-size: 26px; width: 35px; text-align: center; }
-        .info-item h4 { font-family: 'Orbitron'; font-size: 13px; color: var(--accent); margin-bottom: 8px; }
-        .info-item p, .info-item a { color: #ccc; font-size: 15px; text-decoration: none !important; }
-        .remove-underline { text-decoration: none !important; color: #2e86de !important; font-weight: 700; transition: 0.3s; }
-        .remove-underline:hover { color: var(--accent) !important; }
+        .form-group label { font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 12px; display: block; letter-spacing: 1px; }
         
-        .map-wrapper { width: 100%; height: 550px; border-radius: 20px; overflow: hidden; border: 1px solid #333; }
-
-        .wa-float { position: fixed; bottom: 40px; right: 40px; background: var(--wa-green); width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 35px; z-index: 1000; text-decoration: none; transition: 0.3s; }
-        .wa-float:hover { transform: scale(1.1); }
-
-        footer { padding: 100px 0; background: #020202; text-align: center; border-top: 1px solid rgba(255,255,255,0.03); }
-        .footer-logo img { height: 140px; width: auto; margin-bottom: 35px; }
+        /* ========================================================= */
+        /* CORREÇÃO DO FORMULÁRIO (TEXTO BRANCO NO SELECT FUNCIONANDO) */
+        /* ========================================================= */
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);
+            color: white; padding: 18px 20px; border-radius: 12px; outline: none; font-family: 'Inter';
+            font-size: 15px; transition: all 0.3s ease;
+            color-scheme: dark; /* Força o navegador a renderizar o modo escuro nativo (calendários/scroll) */
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--accent); background: rgba(255,140,0,0.02); box-shadow: 0 0 20px rgba(255,140,0,0.15);
+        }
         
-        /* --- AJUSTES MOBILE (FIX TABELA E LOGOS) --- */
-        @media (max-width: 900px) { 
-            .contato-grid, .agendamento-grid, .about-grid { grid-template-columns: 1fr !important; } 
-            .form-grid { grid-template-columns: 1fr !important; } 
-            .btn-enviar { grid-column: span 1 !important; } 
-            .marcas-bg-carousel img { height: 180px !important; margin: 0 40px !important; opacity: 0.3 !important; }
-            .hero { min-height: 600px; padding: 60px 0; }
-            .hero h1 { font-size: 28px !important; }
-            .agendamento-container, .info-box { padding: 30px 20px !important; }
+        /* Garantir que as opções do select fiquem com fundo escuro e letras brancas */
+        .form-group select option {
+            background-color: #0a0c0f; /* Cor sólida bem escura para a caixa de opções */
+            color: #ffffff; 
+            font-size: 15px;
+        }
+        /* ========================================================= */
+        
+        .btn-enviar {
+            grid-column: span 2; width: 100%; padding: 25px; background: var(--wa-green); color: white; border: none; border-radius: 12px;
+            font-size: 16px; font-weight: 900; cursor: pointer; font-family: 'Orbitron'; letter-spacing: 3px; 
+            display: flex; align-items: center; justify-content: center; gap: 15px; transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3); text-transform: uppercase;
+        }
+        .btn-enviar i { font-size: 24px; }
+        .btn-enviar:hover { background: var(--wa-green-hover); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.5); }
+
+        /* --- CONTATO --- */
+        .contato-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; margin: 100px 0; padding-bottom: 50px; }
+        .info-box { background: rgba(10, 12, 15, 0.75); padding: 60px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(20px); }
+        .info-item { display: flex; align-items: flex-start; gap: 25px; margin-bottom: 40px; }
+        .info-item i { color: var(--accent); font-size: 30px; width: 40px; text-align: center; filter: drop-shadow(0 0 10px var(--accent-glow)); }
+        .info-item h4 { font-size: 14px; color: var(--white); margin-bottom: 8px; opacity: 0.9; }
+        .info-item p, .info-item a { color: #aaa; font-size: 16px; text-decoration: none !important; line-height: 1.6; }
+        .remove-underline { color: var(--accent) !important; font-weight: 700; transition: 0.3s; }
+        .remove-underline:hover { text-shadow: 0 0 10px var(--accent-glow); color: #fff !important; }
+        
+        .map-wrapper { width: 100%; height: 600px; border-radius: 30px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.5); filter: grayscale(0.5) contrast(1.1); transition: 0.5s; }
+        .map-wrapper:hover { filter: grayscale(0) contrast(1); }
+
+        .wa-float { position: fixed; bottom: 40px; right: 40px; background: var(--wa-green); width: 75px; height: 75px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; z-index: 1000; text-decoration: none; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); }
+        .wa-float:hover { transform: scale(1.15) rotate(-10deg); box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6); }
+
+        footer { padding: 100px 0; background: #010101; text-align: center; border-top: 1px solid rgba(255,255,255,0.02); }
+        .footer-logo img { height: 160px; width: auto; margin-bottom: 40px; opacity: 0.8; transition: 0.3s; }
+        .footer-logo img:hover { opacity: 1; filter: drop-shadow(0 0 20px rgba(255,255,255,0.1)); }
+        footer p { color: #666; font-size: 14px; letter-spacing: 2px; }
+        
+        /* --- AJUSTES MOBILE EXTREMOS --- */
+        @media (max-width: 900px) {
+            .contato-grid, .agendamento-grid, .about-grid { grid-template-columns: 1fr !important; gap: 40px; }
+            .form-grid { grid-template-columns: 1fr !important; }
+            .btn-enviar { grid-column: span 1 !important; }
+            .marcas-bg-carousel img { height: 200px !important; margin: 0 50px !important; opacity: 0.4 !important; }
+            .hero { min-height: 80vh; padding: 100px 0 60px 0; }
+            .hero h1 { font-size: 32px !important; }
+            .agendamento-container, .info-box, .about-card { padding: 40px 25px !important; }
             .nav-links { display: none; }
+            .logo-nav img { height: 90px; } 
+            .service-card { padding: 40px 20px; }
         }
     </style>
 </head>
@@ -191,14 +372,14 @@
         <div class="container reveal">
             <div class="about-grid">
                 <div class="about-card">
-                    <h2><i class="fa-solid fa-gears" style="margin-right:15px; color:var(--accent);"></i>A EMPRESA</h2>
+                    <h2><i class="fa-solid fa-gears"></i>A EMPRESA</h2>
                     <p>No mercado desde 2011, foco em qualidade na manutenção de caminhões Diesel, diagnóstico de falhas e programação de parâmetros de alta complexidade.</p>
                     <p>Oferecemos soluções fundamentais voltadas à máxima performance e satisfação total dos nossos clientes.</p>
                 </div>
                 <div class="about-card">
-                    <h2><i class="fa-brands fa-instagram" style="margin-right:15px; color:var(--accent);"></i>SIGA A VOLTEC</h2>
+                    <h2><i class="fa-brands fa-instagram"></i>SIGA A VOLTEC</h2>
                     <p>Acompanhe nosso trabalho, equipe e resultados diários diretamente no nosso Instagram oficial.</p>
-                    <a href="https://www.instagram.com/voltecmecatronica" class="btn-insta" target="_blank">VER INSTAGRAM</a>
+                    <a href="https://www.instagram.com/voltecmecatronica" class="btn-insta" target="_blank">VER INSTAGRAM REELS</a>
                 </div>
             </div>
         </div>
@@ -206,18 +387,115 @@
 
     <section class="container" id="servicos">
         <div class="servicos-grid">
-            <div class="service-card reveal"><i class="fa-solid fa-truck-pickup"></i><h3>Mecânica Pesada</h3><p>Especialistas em motores diesel de alta performance com ferramentaria de precisão.</p></div>
-            <div class="service-card reveal"><i class="fa-solid fa-microchip"></i><h3>Diagnóstico Avançado</h3><p>Leitura técnica de módulos e sensores utilizando scanners de última geração.</p></div>
-            <div class="service-card reveal"><i class="fa-solid fa-sliders"></i><h3>Parametrização</h3><p>Reprogramação de softwares e ajuste de parâmetros originais de fábrica.</p></div>
-            <div class="service-card reveal"><i class="fa-solid fa-check-double"></i><h3>Qualidade Certificada</h3><p>Processos rigorosos voltados à durabilidade extrema do serviço executado.</p></div>
-            <div class="service-card reveal"><i class="fa-solid fa-gauge-high"></i><h3>Chipagem (Performance)</h3><p>Otimização de torque e potência visando performance e economia real de combustível.</p></div>
-            <div class="service-card reveal"><i class="fa-solid fa-shield-virus"></i><h3>Preventiva</h3><p>Revisões sistemáticas e calibração de sistemas para evitar paradas indesejadas.</p></div>
-            <div class="service-card reveal"><i class="fa-solid fa-microscope"></i><h3>Tecnologia Mecatrônica</h3><p>Integração total entre sistemas mecânicos e eletrônicos para diagnóstico preciso.</p></div>
-            <div class="service-card reveal"><i class="fa-solid fa-gears"></i><h3>Retífica e Recondicionamento</h3><p>Reparo completo de motores, diferenciais e caixas de transmissão.</p></div>
-            <div class="service-card reveal"><i class="fa-solid fa-bolt"></i><h3>Elétrica Pesada</h3><p>Reparo de chicotes, alternadores e sistemas de partida diesel.</p></div>
-            <div class="service-card reveal"><i class="fa-solid fa-fan"></i><h3>Ar Condicionado</h3><p>Manutenção técnica e higienização de sistemas de climatização de cabine.</p></div>
-            <div class="service-card reveal"><i class="fa-solid fa-wind"></i><h3>Turbinas</h3><p>Análise técnica, venda e troca de turbocompressores e sistemas de ar.</p></div>
-            <div class="service-card reveal"><i class="fa-solid fa-link"></i><h3>Suspensão e Direção</h3><p>Manutenção em sistemas de estabilidade, suspensão a ar e direção hidráulica.</p></div>
+            
+            <div class="service-card reveal" onclick="toggleServico(this)" data-folder="mecanica-pesada">
+                <i class="fa-solid fa-truck-pickup"></i><h3>Mecânica Pesada</h3>
+                <p>Especialistas em motores diesel de alta performance com ferramentaria de precisão.</p>
+                <div class="expanded-layout">
+                    <div class="slideshow-box"></div>
+                    <div class="text-box-large">Especialistas em motores diesel de alta performance com ferramentaria de precisão.</div>
+                </div>
+            </div>
+            
+            <div class="service-card reveal" onclick="toggleServico(this)" data-folder="diagnostico">
+                <i class="fa-solid fa-microchip"></i><h3>Diagnóstico Avançado</h3>
+                <p>Leitura técnica de módulos e sensores utilizando scanners de última geração.</p>
+                <div class="expanded-layout">
+                    <div class="slideshow-box"></div>
+                    <div class="text-box-large">Leitura técnica de módulos e sensores utilizando scanners de última geração.</div>
+                </div>
+            </div>
+            
+            <div class="service-card reveal" onclick="toggleServico(this)" data-folder="parametrizacao">
+                <i class="fa-solid fa-sliders"></i><h3>Parametrização</h3>
+                <p>Reprogramação de softwares e ajuste de parâmetros originais de fábrica.</p>
+                <div class="expanded-layout">
+                    <div class="slideshow-box"></div>
+                    <div class="text-box-large">Reprogramação de softwares e ajuste de parâmetros originais de fábrica.</div>
+                </div>
+            </div>
+            
+            <div class="service-card reveal" onclick="toggleServico(this)" data-folder="qualidade">
+                <i class="fa-solid fa-check-double"></i><h3>Qualidade Certificada</h3>
+                <p>Processos rigorosos voltados à durabilidade extrema do serviço executado.</p>
+                <div class="expanded-layout">
+                    <div class="slideshow-box"></div>
+                    <div class="text-box-large">Processos rigorosos voltados à durabilidade extrema do serviço executado.</div>
+                </div>
+            </div>
+            
+            <div class="service-card reveal" onclick="toggleServico(this)" data-folder="chipagem">
+                <i class="fa-solid fa-gauge-high"></i><h3>Chipagem (Performance)</h3>
+                <p>Otimização de torque e potência visando performance e economia real de combustível.</p>
+                <div class="expanded-layout">
+                    <div class="slideshow-box"></div>
+                    <div class="text-box-large">Otimização de torque e potência visando performance e economia real de combustível.</div>
+                </div>
+            </div>
+            
+            <div class="service-card reveal" onclick="toggleServico(this)" data-folder="preventiva">
+                <i class="fa-solid fa-shield-virus"></i><h3>Preventiva</h3>
+                <p>Revisões sistemáticas e calibração de sistemas para evitar paradas indesejadas.</p>
+                <div class="expanded-layout">
+                    <div class="slideshow-box"></div>
+                    <div class="text-box-large">Revisões sistemáticas e calibração de sistemas para evitar paradas indesejadas.</div>
+                </div>
+            </div>
+            
+            <div class="service-card reveal" onclick="toggleServico(this)" data-folder="mecatronica">
+                <i class="fa-solid fa-microscope"></i><h3>Tecnologia Mecatrônica</h3>
+                <p>Integração total entre sistemas mecânicos e eletrônicos para diagnóstico preciso.</p>
+                <div class="expanded-layout">
+                    <div class="slideshow-box"></div>
+                    <div class="text-box-large">Integração total entre sistemas mecânicos e eletrônicos para diagnóstico preciso.</div>
+                </div>
+            </div>
+            
+            <div class="service-card reveal" onclick="toggleServico(this)" data-folder="retifica">
+                <i class="fa-solid fa-gears"></i><h3>Retífica e Recondicionamento</h3>
+                <p>Reparo completo de motores, diferenciais e caixas de transmissão.</p>
+                <div class="expanded-layout">
+                    <div class="slideshow-box"></div>
+                    <div class="text-box-large">Reparo completo de motores, diferenciais e caixas de transmissão.</div>
+                </div>
+            </div>
+            
+            <div class="service-card reveal" onclick="toggleServico(this)" data-folder="eletrica">
+                <i class="fa-solid fa-bolt"></i><h3>Elétrica Pesada</h3>
+                <p>Reparo de chicotes, alternadores e sistemas de partida diesel.</p>
+                <div class="expanded-layout">
+                    <div class="slideshow-box"></div>
+                    <div class="text-box-large">Reparo de chicotes, alternadores e sistemas de partida diesel.</div>
+                </div>
+            </div>
+            
+            <div class="service-card reveal" onclick="toggleServico(this)" data-folder="ar-condicionado">
+                <i class="fa-solid fa-fan"></i><h3>Ar Condicionado</h3>
+                <p>Manutenção técnica e higienização de sistemas de climatização de cabine.</p>
+                <div class="expanded-layout">
+                    <div class="slideshow-box"></div>
+                    <div class="text-box-large">Manutenção técnica e higienização de sistemas de climatização de cabine.</div>
+                </div>
+            </div>
+            
+            <div class="service-card reveal" onclick="toggleServico(this)" data-folder="turbinas">
+                <i class="fa-solid fa-wind"></i><h3>Turbinas</h3>
+                <p>Análise técnica, venda e troca de turbocompressores e sistemas de ar.</p>
+                <div class="expanded-layout">
+                    <div class="slideshow-box"></div>
+                    <div class="text-box-large">Análise técnica, venda e troca de turbocompressores e sistemas de ar.</div>
+                </div>
+            </div>
+            
+            <div class="service-card reveal" onclick="toggleServico(this)" data-folder="suspensao">
+                <i class="fa-solid fa-link"></i><h3>Suspensão e Direção</h3>
+                <p>Manutenção em sistemas de estabilidade, suspensão a ar e direção hidráulica.</p>
+                <div class="expanded-layout">
+                    <div class="slideshow-box"></div>
+                    <div class="text-box-large">Manutenção em sistemas de estabilidade, suspensão a ar e direção hidráulica.</div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -231,78 +509,152 @@
         </div>
     </section>
 
-    <section class="agendamento-section" id="agendar">
-        <div class="container reveal">
-            <div class="agendamento-container">
-                <div class="agendamento-grid">
-                    <div class="agendamento-text">
-                        <h2>AGENDAMENTO</h2>
-                        <p>Agende seu atendimento de forma rápida e prática.</p>
-                        <ul>
-                            <li><i class="fa-solid fa-check" style="color: var(--accent);"></i> Escolha o serviço ideal</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--accent);"></i> Defina a data e período</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--accent);"></i> Finalize no WhatsApp</li>
-                        </ul>
-                    </div>
-                    <form id="agendamentoForm">
-                        <div class="form-grid">
-                            <div class="form-group"><label>NOME COMPLETO</label><input type="text" id="nome" placeholder="Seu nome" required></div>
-                            <div class="form-group"><label>TELEFONE</label><input type="text" id="telefone" placeholder="(41) 99999-9999" required></div>
-                            <div class="form-group"><label>VEÍCULO</label><input type="text" id="caminhao" placeholder="Ex: Volvo FH 540" required></div>
-                            <div class="form-group"><label>PLACA</label><input type="text" id="placa" placeholder="ABC-1234"></div>
-                            <div class="form-group full"><label>SERVIÇO</label>
-                                <select id="servico">
-                                    <option>Revisão Geral</option><option>Diagnóstico Eletrônico</option>
-                                    <option>Parametrização</option><option>Chipagem / Reprogramação</option>
-                                    <option>Manutenção Preventiva</option><option>Câmbio Automatizado</option>
-                                    <option>Arla 32 / SCR</option><option>Sistemas de Freios</option>
-                                    <option>Elétrica</option><option>Ar Condicionado</option>
-                                    <option>Turbinas</option><option>Suspensão</option>
-                                </select>
+    <div class="bottom-video-wrapper">
+        
+        <video class="bottom-bg-video" autoplay loop muted playsinline>
+            <source src="video-fundo-final.mp4" type="video/mp4">
+        </video>
+
+        <div class="bottom-content-layer">
+            
+            <section class="agendamento-section" id="agendar">
+                <div class="container reveal">
+                    <div class="agendamento-container">
+                        <div class="agendamento-grid">
+                            <div class="agendamento-text">
+                                <h2>AGENDAMENTO</h2>
+                                <p>Agende seu atendimento de forma rápida e prática diretamente na nossa base de especialistas.</p>
+                                <ul>
+                                    <li><i class="fa-solid fa-check"></i> Escolha o serviço ideal</li>
+                                    <li><i class="fa-solid fa-check"></i> Defina a data e período</li>
+                                    <li><i class="fa-solid fa-check"></i> Finalize no WhatsApp instantaneamente</li>
+                                </ul>
                             </div>
-                            <div class="form-group"><label>DATA DESEJADA</label><input type="date" id="data" required></div>
-                            <div class="form-group"><label>PERÍODO</label><select id="periodo"><option>Manhã</option><option>Tarde</option></select></div>
-                            <div class="form-group full"><textarea id="observacoes" rows="3" placeholder="Resumo do problema..."></textarea></div>
+                            <form id="agendamentoForm">
+                                <div class="form-grid">
+                                    <div class="form-group"><label>NOME COMPLETO</label><input type="text" id="nome" placeholder="Seu nome completo" required></div>
+                                    <div class="form-group"><label>TELEFONE (WHATSAPP)</label><input type="text" id="telefone" placeholder="(41) 99999-9999" required></div>
+                                    <div class="form-group"><label>VEÍCULO</label><input type="text" id="caminhao" placeholder="Ex: Volvo FH 540" required></div>
+                                    <div class="form-group"><label>PLACA</label><input type="text" id="placa" placeholder="ABC-1234"></div>
+                                    <div class="form-group full" style="grid-column: span 2;"><label>SERVIÇO NECESSÁRIO</label>
+                                        <select id="servico">
+                                            <option>Revisão Geral</option><option>Diagnóstico Eletrônico</option>
+                                            <option>Parametrização</option><option>Chipagem / Reprogramação</option>
+                                            <option>Manutenção Preventiva</option><option>Câmbio Automatizado</option>
+                                            <option>Arla 32 / SCR</option><option>Sistemas de Freios</option>
+                                            <option>Elétrica</option><option>Ar Condicionado</option>
+                                            <option>Turbinas</option><option>Suspensão</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group"><label>DATA DESEJADA</label><input type="date" id="data" required></div>
+                                    <div class="form-group"><label>PERÍODO</label><select id="periodo"><option>Manhã (08h - 12h)</option><option>Tarde (13h - 18h)</option></select></div>
+                                    <div class="form-group full" style="grid-column: span 2;"><textarea id="observacoes" rows="3" placeholder="Descreva brevemente o que está acontecendo com o caminhão..."></textarea></div>
+                                </div>
+                                <button type="submit" class="btn-enviar"><i class="fa-brands fa-whatsapp"></i> SOLICITAR ATENDIMENTO</button>
+                            </form>
                         </div>
-                        <button type="submit" class="btn-enviar"><i class="fa-brands fa-whatsapp"></i> SOLICITAR ATENDIMENTO</button>
-                    </form>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <section id="contato" class="container reveal">
-        <div class="contato-grid">
-            <div class="info-box">
-                <h2 style="margin-bottom: 40px; color: var(--accent);">CONTATO</h2>
-                <div class="info-item"><i class="fa-solid fa-location-dot"></i><div><h4>ENDEREÇO</h4><p>PR-423, 1141 - Jardim Itaqui<br>Campo Largo, PR - CEP: 83604-142</p></div></div>
-                <div class="info-item"><i class="fa-solid fa-phone"></i><div><h4>TELEFONE</h4><p>(41) 99826-7967</p></div></div>
-                <div class="info-item"><i class="fa-brands fa-whatsapp" style="color:var(--wa-green)"></i><div><h4>WHATSAPP</h4><a href="https://wa.me/5541998267967" target="_blank" class="remove-underline">(41) 99826-7967<br>Click aqui e fale com um especialista</a></div></div>
-                <div class="info-item"><i class="fa-solid fa-envelope"></i><div><h4>E-MAIL</h4><p>voltecmecatronica@gmail.com</p></div></div>
-            </div>
-            <div class="map-wrapper">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.837332766467!2d-49.4633783!3d-25.4437299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dcee007204ef83%3A0xc03697e324021200!2sPR-423%2C%201141%20-%20Jardim%20Itaqui%2C%20Campo%20Largo%20-%20PR%2C%2083604-142!5e0!3m2!1spt-BR!2sbr!4v1715000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-        </div>
-    </section>
+            <section id="contato" class="container reveal">
+                <div class="contato-grid">
+                    <div class="info-box">
+                        <h2 style="margin-bottom: 45px; color: var(--accent); text-shadow: 0 0 15px var(--accent-glow);">CONTATO</h2>
+                        <div class="info-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <div><h4>ENDEREÇO</h4><p>PR-423, 1141 - Jardim Itaqui<br>Campo Largo, PR - CEP: 83604-142</p></div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <div><h4>TELEFONE / PLANTÃO</h4><p>(41) 99826-7967</p></div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-brands fa-whatsapp" style="color:var(--wa-green); filter: drop-shadow(0 0 10px rgba(37,211,102,0.5));"></i>
+                            <div><h4>WHATSAPP DIRETO</h4><a href="https://wa.me/5541998267967" target="_blank" class="remove-underline">(41) 99826-7967<br>Clique aqui e fale com o chefe de oficina</a></div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <div><h4>E-MAIL CORPORATIVO</h4><p>voltecmecatronica@gmail.com</p></div>
+                        </div>
+                    </div>
+                    <div class="map-wrapper">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.837332766467!2d-49.4633783!3d-25.4437299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94dcee007204ef83%3A0xc03697e324021200!2sPR-423%2C%201141%20-%20Jardim%20Itaqui%2C%20Campo%20Largo%20-%20PR%2C%2083604-142!5e0!3m2!1spt-BR!2sbr!4v1715000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </section>
 
-    <footer>
-        <div class="container"><div class="footer-logo"><img src="logo-voltec.png" alt="Logo"></div><p>VOLTEC MECATRÔNICA DIESEL © 2026 - Campo Largo / PR</p></div>
+        </div> </div> <footer>
+        <div class="container">
+            <div class="footer-logo"><img src="logo-voltec.png" alt="Logo"></div>
+            <p>VOLTEC MECATRÔNICA DIESEL © 2026<br>TECNOLOGIA DE PONTA EM CAMPO LARGO / PR</p>
+        </div>
     </footer>
 
     <script>
-        // SCRIPT ANIMAÇÃO
+        // Animação de Entrada Superior
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.1 });
+            entries.forEach(entry => { 
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active'); 
+                }
+            });
+        }, { threshold: 0.15 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // SCRIPT WHATSAPP
+        // Envio para WhatsApp formatado
         document.getElementById('agendamentoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const msg = `*Agendamento Voltec*%0A*Cliente:* ${document.getElementById('nome').value}%0A*Caminhão:* ${document.getElementById('caminhao').value}%0A*Serviço:* ${document.getElementById('servico').value}`;
-            window.open(`https://wa.me/5541998267967?text=${encodeURIComponent(msg)}`, '_blank');
+            const msg = `*Agendamento Voltec*%0A%0A*Cliente:* ${document.getElementById('nome').value}%0A*Caminhão:* ${document.getElementById('caminhao').value}%0A*Placa:* ${document.getElementById('placa').value}%0A*Serviço:* ${document.getElementById('servico').value}%0A*Data:* ${document.getElementById('data').value} (${document.getElementById('periodo').value})%0A*Obs:* ${document.getElementById('observacoes').value}`;
+            window.open(`https://wa.me/5541998267967?text=${msg}`, '_blank');
         });
+
+        // Lógica de Acordeão com Slideshow Fotográfico
+        function toggleServico(cardClicado) {
+            const jaEstavaAberto = cardClicado.classList.contains('open');
+
+            // Fecha todos
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.classList.remove('open');
+            });
+
+            // Se não estava aberto, abre este e inicia o loop
+            if (!jaEstavaAberto) {
+                cardClicado.classList.add('open');
+                
+                const pastaNome = cardClicado.getAttribute('data-folder');
+                const caixaFotos = cardClicado.querySelector('.slideshow-box');
+
+                if (caixaFotos && caixaFotos.children.length === 0) {
+                    iniciarLoopDeFotos(caixaFotos, pastaNome);
+                }
+                
+                // Rolagem suave para o card recém aberto
+                setTimeout(() => {
+                    cardClicado.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }
+        }
+
+        // Sistema de Crossfade Cinematográfico (Ken Burns)
+        function iniciarLoopDeFotos(container, pasta) {
+            for (let i = 1; i <= 2; i++) {
+                const img = document.createElement('img');
+                img.src = `servicos/${pasta}/0${i}.png`;
+                if (i === 1) img.classList.add('show');
+                container.appendChild(img);
+            }
+
+            let indiceAtual = 0;
+            setInterval(() => {
+                const imagens = container.querySelectorAll('img');
+                if (imagens.length > 0) {
+                    imagens[indiceAtual].classList.remove('show');
+                    indiceAtual = (indiceAtual + 1) % imagens.length;
+                    imagens[indiceAtual].classList.add('show');
+                }
+            }, 4500); 
+        }
     </script>
 </body>
 </html>
